@@ -47,31 +47,42 @@ public class SellerDaoJDBC implements SellerDao {
                             "WHERE seller.Id = ?"
             );
             st.setInt(1, id); //Valor da ? vai ser o valor recebido como parametro
-            rs = st.executeQuery(); // Executa comando
+            rs = st.executeQuery();
             if (rs.next()) { //Testa se obteve algum resultado
                 //Instancia objs(Seller e Department) com dados presentes no BD
-                Department dep = new Department();
-                dep.setId(rs.getInt("DepartmentId"));
-                dep.setName(rs.getString("DepName"));
-                Seller sl = new Seller();
-                sl.setName(rs.getString("Name"));
-                sl.setId(rs.getInt("Id"));
-                sl.setBaseSalary(rs.getDouble("BaseSalary"));
-                sl.setEmail(rs.getString("Email"));
-                sl.setBirthDate(rs.getDate("BirthDate"));
-                sl.setDepartment(dep);
+                Department dep = instanceOfDepartment(rs);
+                Seller sl = instanceOfSeller(rs, dep);
+
+
                 return sl;
             }
             return null;
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
-        }finally {
+        } finally {
             DB.closeStatement(st);
             DB.closeResultSet(rs);
         }
 
 
+    }
 
+    private Seller instanceOfSeller(ResultSet rs, Department dep) throws SQLException {
+        Seller sl = new Seller();
+        sl.setName(rs.getString("Name"));
+        sl.setId(rs.getInt("Id"));
+        sl.setBaseSalary(rs.getDouble("BaseSalary"));
+        sl.setEmail(rs.getString("Email"));
+        sl.setBirthDate(rs.getDate("BirthDate"));
+        sl.setDepartment(dep);
+        return sl;
+    }
+
+    private Department instanceOfDepartment(ResultSet rs) throws SQLException {
+        Department dep = new Department();
+        dep.setName(rs.getString("Name"));
+        dep.setId(rs.getInt("Id"));
+        return dep;
     }
 
     @Override
