@@ -35,11 +35,17 @@ public class program {
         sellerDao.insert(newSeller);
         System.out.println("Inserted! New ID = " + newSeller.getId());
 
-        System.out.println("\n****TEST 5 =  SellerInsert****");
+        System.out.println("\n****TEST 5 =  SellerUpdate****");
         seller = sellerDao.findById(1);
         seller.setName("Abish waine");
         sellerDao.update(seller);
         System.out.println("Update completed!");
+
+
+        System.out.println("\n****TEST 6 =  SellerDelete****");
+        sellerDao.deleteById(8);
+
+        System.out.println("Delete completed!");
 
 
     }
