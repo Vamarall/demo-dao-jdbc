@@ -1,8 +1,6 @@
 package application;
 
-import model.dao.DaoFactory;
-import model.dao.SellerDao;
-import model.dao.SellerDaoJDBC;
+import model.dao.*;
 import model.entities.Department;
 import model.entities.Seller;
 
@@ -31,7 +29,7 @@ public class program {
         }
 
         System.out.println("\n****TEST 4 =  SellerInsert****");
-        Seller newSeller = new Seller(null, "John Doe", "john.doe@example.com", new Date(), 3000.0, department);
+        Seller newSeller = new Seller(null, "Frank Edgar", "frankedgar.doe@example.com", new Date(), 3000.0, department);
         sellerDao.insert(newSeller);
         System.out.println("Inserted! New ID = " + newSeller.getId());
 
@@ -43,10 +41,26 @@ public class program {
 
 
         System.out.println("\n****TEST 6 =  SellerDelete****");
-        sellerDao.deleteById(8);
-
+        sellerDao.deleteById(14);
         System.out.println("Delete completed!");
 
+
+        System.out.println("\n****TEST 7 =  DepartmentInsert****");
+        Department department1 = new Department(12, "Software2");
+        DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
+        departmentDao.insert(department1);
+        System.out.println("Update completed!");
+
+
+
+
+        System.out.println("\n****TEST 7 =  DeleteById****");
+        departmentDao.deleteById(11);
+        System.out.println("Delete completed!");
+
+        System.out.println("\n****TEST 8 =  FindById****");
+        Department department2 = departmentDao.findById(1);
+        System.out.println(department2);
 
     }
 }
