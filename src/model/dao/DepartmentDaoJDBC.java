@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DepartmentDaoJDBC implements DepartmentDao {
@@ -92,7 +93,6 @@ public class DepartmentDaoJDBC implements DepartmentDao {
             rs = st.executeQuery();
 
             if (rs.next()) {
-
                 Department dep = instanceOfDepartment(rs);
                 return dep;
             }
@@ -101,11 +101,39 @@ public class DepartmentDaoJDBC implements DepartmentDao {
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         }
+        finally {
+            DB.closeStatement(st);
+        }
     }
 
     @Override
     public List<Department> findALl() {
-        return List.of();
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        List<Department> list = new ArrayList<>();
+        try {
+            st = conn.prepareStatement(
+                    "SELECT * FROM department "
+            );
+
+            rs = st.executeQuery();
+
+            while (rs.next()) {
+
+                Department dep = instanceOfDepartment(rs);
+                list.add(dep);
+
+            }
+            return list;
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }
+        finally {
+            DB.closeStatement(st);
+            DB.closeResultSet(rs);
+
+        }
     }
 
     private Department instanceOfDepartment(ResultSet rs) throws SQLException {

@@ -4,6 +4,7 @@ import model.dao.*;
 import model.entities.Department;
 import model.entities.Seller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class program {
         }
 
         System.out.println("\n****TEST 4 =  SellerInsert****");
-        Seller newSeller = new Seller(null, "Frank Edgar", "frankedgar.doe@example.com", new Date(), 3000.0, department);
+        Seller newSeller = new Seller(null, "Victor souza", "fvamarakl.doe@example.com", new Date(), 3000.0, department);
         sellerDao.insert(newSeller);
         System.out.println("Inserted! New ID = " + newSeller.getId());
 
@@ -46,21 +47,25 @@ public class program {
 
 
         System.out.println("\n****TEST 7 =  DepartmentInsert****");
-        Department department1 = new Department(12, "Software2");
+        Department department1 = new Department(15, "Software3");
         DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
         departmentDao.insert(department1);
         System.out.println("Update completed!");
 
 
-
-
         System.out.println("\n****TEST 7 =  DeleteById****");
-        departmentDao.deleteById(11);
+        departmentDao.deleteById(14);
         System.out.println("Delete completed!");
 
         System.out.println("\n****TEST 8 =  FindById****");
         Department department2 = departmentDao.findById(1);
         System.out.println(department2);
+
+        System.out.println("\n****TEST 8 =  FindById****");
+        List<Department> departments = departmentDao.findALl();
+        for (Department dep : departments) {
+            System.out.println(dep);
+        }
 
     }
 }
