@@ -42,19 +42,19 @@ public class program {
 
 
         System.out.println("\n****TEST 6 =  SellerDelete****");
-        sellerDao.deleteById(14);
+        sellerDao.deleteById(34);
         System.out.println("Delete completed!");
 
 
         System.out.println("\n****TEST 7 =  DepartmentInsert****");
-        Department department1 = new Department(15, "Software3");
+        Department department1 = new Department(13, "Software3");
         DepartmentDao departmentDao = DaoFactory.createDepartmentDao();
         departmentDao.insert(department1);
         System.out.println("Update completed!");
 
 
         System.out.println("\n****TEST 7 =  DeleteById****");
-        departmentDao.deleteById(14);
+        departmentDao.deleteById(11);
         System.out.println("Delete completed!");
 
         System.out.println("\n****TEST 8 =  FindById****");
@@ -67,5 +67,9 @@ public class program {
             System.out.println(dep);
         }
 
+        System.out.println("\n****TEST 8 =  UpdateDepartment****");
+        Department newDepartment = new Department(7 , "Instagram");
+        departmentDao.update(newDepartment);
+        System.out.println("Update completed!");
     }
 }
